@@ -1,13 +1,17 @@
 <div class="card shadow-sm border-0 mb-4">
   <div class="card-body">
-    <%= form_with url: topics_path, method: :get, local: true do |f| %>
+    <%= form_with url: topics_path,
+                  method: :get,
+                  local: true,
+                  data: { turbo: false } do |f| %>   <!-- ← これ追加 -->
       <div class="input-group">
-        <%= f.text_field :q, value:@q, class:"form-control", placeholder:"Search by title or body" %>
+        <%= f.text_field :q, value: @q, class:"form-control", placeholder:"Search by title or body" %>
         <button class="btn btn-warning" type="submit">Search</button>
       </div>
     <% end %>
   </div>
 </div>
+
 
 <div class="vstack gap-3">
   <% @topics.each do |t| %>

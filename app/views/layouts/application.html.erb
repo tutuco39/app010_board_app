@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "App010 Board App" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Pastel Board</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
-
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-lg" style="background:#FFE2C9;">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="/">🧡 Pastel Board</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
+                aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="nav" class="collapse navbar-collapse">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><%= link_to "Topics", topics_path, class:"nav-link" %></li>
+          </ul>
+          <div class="d-flex gap-2">
+            <% if user_signed_in? %>
+              <span class="badge rounded-pill text-bg-warning"><%= current_user.email %></span>
+              <%= link_to "New Topic", new_topic_path, class:"btn btn-warning" %>
+              <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"btn btn-outline-dark" %>
+            <% else %>
+              <%= link_to "Log in", new_user_session_path, class:"btn btn-outline-dark" %>
+              <%= link_to "Sign up", new_user_registration_path, class:"btn btn-warning" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-4">
+      <% if notice %>
+        <div class="alert alert-success"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="alert alert-danger"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>
+

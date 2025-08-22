@@ -2,35 +2,26 @@
   <div class="card-body">
     <%= form_with url: topics_path, method: :get, local: true do |f| %>
       <div class="input-group">
-        <%= f.text_field :q, value: @q, class:"form-control",
-              placeholder:"Search by title or body" %>
+        <%= f.text_field :q, value:@q, class:"form-control", placeholder:"Search by title or body" %>
         <button class="btn btn-warning" type="submit">Search</button>
       </div>
     <% end %>
   </div>
 </div>
 
-<div class="row g-3">
+<div class="vstack gap-3">
   <% @topics.each do |t| %>
-    <div class="col-12">
-      <div class="card border-0 shadow-sm">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <h5 class="card-title mb-0">
-              <%= link_to t.title, t, class:"stretched-link text-decoration-none text-dark" %>
-            </h5>
-            <small class="text-muted"><%= t.created_at.strftime("%Y-%m-%d %H:%M") %></small>
-          </div>
-          <p class="card-text mt-2 text-muted">
-            <%= truncate(strip_tags(simple_format(t.body)), length: 160) %>
-          </p>
-          <div class="d-flex gap-2 align-items-center">
-            <span class="badge text-bg-warning">by <%= t.user.email %></span>
-            <% if t.image.attached? %>
-              <span class="badge text-bg-light border">image</span>
-            <% end %>
-          </div>
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h5 class="card-title mb-0">
+            <%= link_to t.title, t, class:"stretched-link text-decoration-none text-dark" %>
+          </h5>
+          <small class="text-muted"><%= t.created_at.strftime("%Y-%m-%d %H:%M") %></small>
         </div>
+        <p class="card-text mt-2 text-muted"><%= truncate(strip_tags(simple_format(t.body)), length: 160) %></p>
+        <span class="badge text-bg-warning">by <%= t.user.email %></span>
+        <% if t.image.attached? %><span class="badge text-bg-light border ms-2">image</span><% end %>
       </div>
     </div>
   <% end %>

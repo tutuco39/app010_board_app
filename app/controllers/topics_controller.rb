@@ -4,8 +4,10 @@ class TopicsController < ApplicationController
   before_action :authorize_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @q = params[:q]
-    @topics = Topic.search(@q).includes(:user).order(created_at: :desc)
+    # シンプル検索 + 新しい順 + ページネーション
+    @pagy, @topics = pagy(
+      Topic.search(params[:q]).includes(:user).order(created_at: :desc)
+    )
   end
 
   def show

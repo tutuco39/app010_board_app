@@ -18,7 +18,7 @@
 
 users = User.all
 
-9.times do
+20.times do
   topic = Topic.create!(
     title: Faker::Lorem.sentence(word_count: 10),
     body: Faker::Lorem.sentence(word_count: 100),

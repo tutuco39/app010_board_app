@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :topics do
     resources :comments, only: [:create, :destroy]
+    resource  :like,     only: [:create, :destroy]
   end
+
 end
 

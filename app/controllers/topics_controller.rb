@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  skip_before_action :authenticate_user!, only: [:index]
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
   before_action :authorize_owner!, only: [:edit, :update, :destroy]
 

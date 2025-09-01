@@ -26,9 +26,13 @@
           </ul>
           <div class="d-flex gap-2">
             <% if user_signed_in? %>
-              <span class="badge rounded-pill text-bg-warning"><%= current_user.email %></span>
+
+              <span class="badge rounded-pill text-bg-warning d-flex align-items-center px-3 py-2">
+                <%= current_user.email.split('@').first %>
+              </span>
+
               <%= link_to "New Topic", new_topic_path, class:"btn btn-warning" %>
-              <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"btn btn-outline-dark" %>
+              <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark", form: { data: { turbo: false } } %>
             <% else %>
               <%= link_to "Log in", new_user_session_path, class:"btn btn-outline-dark" %>
               <%= link_to "Sign up", new_user_registration_path, class:"btn btn-warning" %>

@@ -1,0 +1,19 @@
+- liked = user_signed_in? && topic.liked_by?(current_user)
+.d-flex.align-items-center.gap-2
+  - if user_signed_in?
+    - if liked
+      = button_to "Unlike",                    |
+        topic_like_path(topic),                |
+        method: :delete,                       |
+        class:"btn btn-outline-danger btn-sm", |
+        form: { data: { turbo_confirm: nil } } |
+    - else
+      = button_to "Like",              |
+        topic_like_path(topic),        |
+        method: :post,                 |
+        class:"btn btn-warning btn-sm" |
+  - else
+    = link_to "Log in to like", new_user_session_path, class:"btn btn-outline-dark btn-sm"
+  %span.badge.text-bg-light.border
+    = topic.likes.count
+    likes

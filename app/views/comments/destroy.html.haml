@@ -1,2 +1,2 @@
-%h1 Comments#destroy
-%p Find me in app/views/comments/destroy.html.erb
+= turbo_stream.replace dom_id(@comment, :like_area) do
+  = render "comments/like_button", comment: @comment

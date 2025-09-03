@@ -17,6 +17,10 @@
         = button_to "Delete", @topic, method: :delete,            |
           class:"btn btn-outline-danger",                         |
           form: { data: { turbo_confirm: "Delete this topic?" } } |
+    %div{ id: dom_id(@topic, :like_area) }
+      = render "topics/like_button", topic: @topic
+
+
 %h4.mb-3
   Comments (#{@comments.size})
 .vstack.gap-3.mb-4
@@ -27,8 +31,13 @@
           .text-muted.small= c.user.email
           .text-muted.small= c.created_at.strftime("%Y-%m-%d %H:%M")
         .mt-2= simple_format c.body
-        .mt-3{:id => "#{dom_id(@topic, :like_area)}"}
-          = render "topics/like_button", topic: @topic
+        %div{ id: dom_id(c, :like_area) }
+          = render "comments/like_button", comment: c
+
+
+
+
+
         - if user_signed_in? && c.user == current_user
           .mt-2
             = button_to "Delete", topic_comment_path(@topic, c),     |

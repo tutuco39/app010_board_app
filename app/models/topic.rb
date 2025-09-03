@@ -9,8 +9,9 @@ class Topic < ApplicationRecord
 
 
   def liked_by?(user)
-    likes.exists?(user: user)
+    user && likes.exists?(user_id: user.id)
   end
+
 
   # シンプル検索（DBに依存しない小ワザ）
   scope :search, ->(q) {

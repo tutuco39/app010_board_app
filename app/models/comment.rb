@@ -1,5 +1,10 @@
+# app/models/comment.rb
 class Comment < ApplicationRecord
-  belongs_to :user
   belongs_to :topic
-  validates :body, presence: true, length: { maximum: 500 }
+  belongs_to :user
+  has_many :comment_likes, dependent: :destroy
+  def liked_by?(user) = user && comment_likes.exists?(user_id: user.id)
 end
+
+
+

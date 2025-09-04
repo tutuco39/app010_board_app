@@ -1,15 +1,22 @@
 - liked = user_signed_in? && comment.liked_by?(current_user)
-.d-flex.align-items-center.gap-2
+.d-flex.align-items-center
   - if user_signed_in?
     - if liked
-      = button_to "Unlike", comment_like_path(comment),
-                  method: :delete, class:"btn btn-outline-danger btn-sm",
-                  form: { data: { turbo: false } }
+      = button_to comment_like_path(comment),
+                  method: :delete,
+                  class: "p-0 border-0 bg-transparent d-flex align-items-center gap-1 text-danger",
+                  form: { data: { turbo: false } } do
+        %i.bi.bi-heart-fill.text-danger
+      %span= comment.comment_likes.count
     - else
-      = button_to "Like",   comment_like_path(comment),
-                  method: :post,    class:"btn btn-warning btn-sm",
-                  form: { data: { turbo: false } }
+      = button_to comment_like_path(comment),
+                  method: :post,
+                  class: "p-0 border-0 bg-transparent d-flex align-items-center gap-1 text-muted",
+                  form: { data: { turbo: false } } do
+        %i.bi.bi-heart.text-muted
+      %span= comment.comment_likes.count
   - else
-    = link_to "Log in to like", new_user_session_path, class:"btn btn-outline-dark btn-sm"
+    .d-flex.align-items-center.gap-1.text-muted
+      %i.bi.bi-heart.text-muted
+      %span= topic.likes.count
 
-  %span.badge.text-bg-light.border= "#{comment.comment_likes.count} likes"

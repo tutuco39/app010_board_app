@@ -14,7 +14,14 @@
           %small.text-muted= t.created_at.strftime("%Y-%m-%d %H:%M")
         %p.card-text.mt-2.text-muted= truncate(strip_tags(simple_format(t.body)), length: 160)
         %span.badge.text-bg-warning
+
+        %span.badge.text-bg-warning.d-flex.align-items-center.gap-2
+          - if t.user.avatar.attached?
+            = image_tag t.user.avatar.variant(resize_to_fill: [45,45]), class:"rounded-circle"
+          - else
+            = image_tag "default-avatar.png", width:45, height:45, class:"rounded-circle"
           by #{t.user.email}
+
         - if t.image.attached?
           %span.badge.text-bg-light.border.ms-2 image
 .d-flex.justify-content-center.mt-4

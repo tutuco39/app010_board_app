@@ -3,13 +3,13 @@
     .card-body
       .mb-3
         %label.form-label Title
-        = f.text_field :title, class:"form-control", maxlength: 80
+        = f.text_field :title, class:"form-control form-narrow", maxlength: 80
       .mb-3
         %label.form-label Body
-        = f.text_area :body, class:"form-control", rows: 8
+        = f.text_area :body, class:"form-control form-narrow", rows: 8
       .mb-3
         %label.form-label Image (optional)
-        = f.file_field :image, accept:"image/*", class:"form-control"
+        = f.file_field :image, accept:"image/*", class:"form-control form-narrow"
         - if @topic.image.attached?
           .mt-3
             = image_tag @topic.image.variant(resize_to_limit: [800, 800]), |

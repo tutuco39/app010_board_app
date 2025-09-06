@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :nullify
   has_many :comment_likes, dependent: :destroy
-    
 
+  has_one_attached :avatar
 
 end

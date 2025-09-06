@@ -16,16 +16,21 @@
           %span.navbar-toggler-icon
         #nav.collapse.navbar-collapse
           %ul.navbar-nav.me-auto.mb-2.mb-lg-0
-            %li.nav-item= link_to "Topics", topics_path, class:"nav-link"
           .d-flex.gap-2
-            - if user_signed_in?
-              %span.badge.rounded-pill.text-bg-warning.d-flex.align-items-center.px-3.py-2
+          - if user_signed_in?
+            = link_to edit_user_registration_path,
+                      class:"text-decoration-none" do
+              %span.rounded-pill.d-flex.align-items-center.px-3.py-2
+                - if current_user.avatar.attached?
+                  = image_tag current_user.avatar.variant(resize_to_fill: [50,50]), class:"rounded-circle me-2"
+                - else
+                  = image_tag "default-avatar.png", width:50, height:50, class:"rounded-circle me-2"
                 = current_user.email.split('@').first
-              = link_to "New Topic", new_topic_path, class:"btn btn-warning"
-              = button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark", form: { data: { turbo: false } }
-            - else
-              = link_to "Log in", new_user_session_path, class:"btn btn-outline-dark"
-              = link_to "Sign up", new_user_registration_path, class:"btn btn-warning"
+
+                = link_to "New Topic", new_topic_path, class:"btn btn-warning"
+          - else
+            = link_to "Log in", new_user_session_path, class:"btn btn-outline-dark"
+            = link_to "Sign up", new_user_registration_path, class:"btn btn-warning"
     .container.my-4
       - if notice
         .alert.alert-success= notice

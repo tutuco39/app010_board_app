@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.form-narrow {
+  max-width: 400px !important;
+}
+

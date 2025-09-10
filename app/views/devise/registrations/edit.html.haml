@@ -8,17 +8,21 @@
   .mb-3
     %label.form-label Avatar
     .d-flex.align-items-center.gap-3
-      - if resource.avatar.attached? && resource.avatar.blob&.persisted?
-        = image_tag url_for(resource.avatar.variant(resize_to_fill: [80,80])),
-                    class: "rounded-circle border shadow-sm cursor-pointer",
-                    data: { action: "click->avatar#pick", avatar_target: "preview" }
-      - else
-        = image_tag "default-avatar.png", width: 80, height: 80,
-                    class: "rounded-circle border shadow-sm cursor-pointer",
-                    data: { action: "click->avatar#pick", avatar_target: "preview" }
+      / 画像
+      %div.avatar-preview
+        - if resource.avatar.attached?
+          = image_tag url_for(resource.avatar.variant(resize_to_fill: [240, 240])),
+            class: "avatar-img",
+            data: { action: "click->avatar#pick", avatar_target: "preview" }
+        - else
+          = image_tag "default-avatar.png",
+            class: "avatar-img",
+            data: { action: "click->avatar#pick", avatar_target: "preview" }
 
-      = f.file_field :avatar, accept: "image/*", class: "d-none",
-                     data: { avatar_target: "fileInput", action: "change->avatar#preview" }
+      / 非表示のファイル入力
+      = f.file_field :avatar, class: "d-none",
+        data: { avatar_target: "fileInput", action: "change->avatar#preview" }
+
 
   .mb-3
     = f.label :email, class: "form-label"

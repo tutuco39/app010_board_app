@@ -1,50 +1,42 @@
-/ app/views/devise/registrations/edit.html.haml
 %h2 Edit profile
-.container-md
-  = form_for(resource,
-            as: resource_name,
-            url: registration_path(resource_name),
-            html: { method: :put, multipart: true,
-                    data: { controller: "avatar", avatar_target: "form", turbo: false } }) do |f|
 
-    .mb-3
-      %label.form-label Avatar
-      .d-flex.align-items-center.gap-3
-        - if resource.avatar.attached?
-          = image_tag resource.avatar.variant(resize_to_fill: [80,80]),
-                      class: "rounded-circle border shadow-sm cursor-pointer",
-                      data: { action: "click->avatar#pick", avatar_target: "preview" }
-        - else
-          = image_tag "default-avatar.png", width: 80, height: 80,
-                      class: "rounded-circle border shadow-sm cursor-pointer",
-                      data: { action: "click->avatar#pick", avatar_target: "preview" }
+= form_for(resource, as: resource_name,
+           url: registration_path(resource_name),
+           html: { method: :put, multipart: true,
+                   data: { controller: "avatar", turbo: false } }) do |f|
 
-        = f.file_field :avatar, class: "d-none", accept: "image/*",
-                      data: { avatar_target: "input", action: "change->avatar#preview" }
+  .mb-3
+    %label.form-label Avatar
+    .d-flex.align-items-center.gap-3
+      - if resource.avatar.attached? && resource.avatar.blob&.persisted?
+        = image_tag url_for(resource.avatar.variant(resize_to_fill: [80,80])),
+                    class: "rounded-circle border shadow-sm cursor-pointer",
+                    data: { action: "click->avatar#pick", avatar_target: "preview" }
+      - else
+        = image_tag "default-avatar.png", width: 80, height: 80,
+                    class: "rounded-circle border shadow-sm cursor-pointer",
+                    data: { action: "click->avatar#pick", avatar_target: "preview" }
 
-      %small.text-muted.mt-1 Click the image to change your avatar.
+      = f.file_field :avatar, accept: "image/*", class: "d-none",
+                     data: { avatar_target: "fileInput", action: "change->avatar#preview" }
 
-    / 他の項目はいつも通り…
-    .mb-3
-      = f.label :email, class: "form-label"
-      = f.email_field :email, class: "form-control form-narrow"
+  .mb-3
+    = f.label :email, class: "form-label"
+    = f.email_field :email, autocomplete: "username", class: "form-control form-narrow"
 
-    .mb-3
-      = f.label :password, class: "form-label"
-      = f.password_field :password, autocomplete: "new-password", class: "form-control form-narrow"
-      %small.form-text Leave blank if you don't want to change it.
+  .mb-3
+    = f.label :password, class: "form-label"
+    = f.password_field :password, autocomplete: "new-password", class: "form-control form-narrow"
+    %small.form-text Leave blank if you don't want to change it.
 
-    .mb-3
-      = f.label :password_confirmation, class: "form-label"
-      = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-narrow"
+  .mb-3
+    = f.label :current_password, class: "form-label"
+    = f.password_field :current_password, autocomplete: "current-password", class: "form-control form-narrow"
 
-    .mb-3
-      = f.label :current_password, class: "form-label"
-      = f.password_field :current_password, autocomplete: "current-password", class: "form-control form-narrow"
+  = f.submit "Update", class: "btn btn-warning"
 
-    .d-flex.justify-content-between.mt-3
-      = f.submit "Update", class: "btn btn-warning"
-      = button_to "Log out", destroy_user_session_path, 
-                  method: :delete, 
-                  class: "btn btn-outline-dark", 
-                  form: { data: { turbo: false } }
+/ フォームの外！
+.d-flex.justify-content-end.mt-3
+  = button_to "Log out", destroy_user_session_path,
+              method: :delete, class: "btn btn-outline-dark",
+              form: { data: { turbo: false } }

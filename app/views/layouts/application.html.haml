@@ -10,30 +10,32 @@
     %link{ rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" }
   %body
     %nav.navbar.navbar-expand-lg{:style => "background:#FFE2C9;"}
-      .container
+      .container.form-narrow
         %a.navbar-brand.fw-bold{:href => "/"} Board app
         %button.navbar-toggler{"aria-controls" => "nav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#nav", "data-bs-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
         #nav.collapse.navbar-collapse
           %ul.navbar-nav.me-auto.mb-2.mb-lg-0
-          .d-flex.gap-2
-          - if user_signed_in?
-            = link_to edit_user_registration_path,
-                      class:"text-decoration-none" do
-              %span.rounded-pill.d-flex.align-items-center.px-3.py-2
-                - if current_user.avatar.attached?
+          .d-flex.align-items-center.justify-content-between.w-100.gap-3.ms-lg-auto
+            - if user_signed_in?
+              = link_to "New Topic", new_topic_path, class:"btn btn-warning"
+              = link_to edit_user_registration_path,
+                        class:"text-decoration-none d-flex align-items-center gap-2" do
+                - if current_user.avatar.attached? && current_user.avatar.blob&.persisted?
                   = image_tag current_user.avatar.variant(resize_to_fill: [50,50]), class:"rounded-circle me-2"
                 - else
                   = image_tag "default-avatar.png", width:50, height:50, class:"rounded-circle me-2"
-                = current_user.email.split('@').first
 
-                = link_to "New Topic", new_topic_path, class:"btn btn-warning"
-          - else
-            = link_to "Log in", new_user_session_path, class:"btn btn-outline-dark"
-            = link_to "Sign up", new_user_registration_path, class:"btn btn-warning"
-    .container.my-4
+                %span= current_user.email.split('@').first
+
+            - else
+              = link_to "Log in", new_user_session_path, class:"btn btn-outline-dark"
+              = link_to "Sign up", new_user_registration_path, class:"btn btn-warning"
+    %main.container.app-container.my-4
       - if notice
         .alert.alert-success= notice
       - if alert
         .alert.alert-danger= alert
       = yield
+
+

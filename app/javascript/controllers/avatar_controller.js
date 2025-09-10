@@ -1,27 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "preview", "form"]
+  static targets = ["fileInput", "preview"]
 
-  pick() {
-    if (this.hasInputTarget) {
-      this.inputTarget.click()   // ← クリックで file input を開く
-    }
-  }
+  pick() { this.fileInputTarget.click() }
 
-  preview(event) {
-    const file = event.target.files && event.target.files[0]
+  preview(e) {
+    const [file] = e.target.files || []
     if (!file) return
-
-    // 即時プレビュー
-    const url = URL.createObjectURL(file)
-    if (this.hasPreviewTarget) {
-      this.previewTarget.src = url
-    }
-
-    // 自動送信
-    if (this.hasFormTarget) {
-      this.formTarget.requestSubmit()
-    }
+    this.previewTarget.src = URL.createObjectURL(file) // 見た目だけ更新
   }
 }

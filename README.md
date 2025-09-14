@@ -51,6 +51,7 @@ bin/dev
 
 ## デモ画面
 
+ユーザー認証画面
 <table>
   <tr>
     <td><img src="screenshots/log_in.png" width="400"></td>
@@ -58,6 +59,7 @@ bin/dev
   </tr>
 </table>
 
+記事の詳細画面
 <table>
   <tr>
     <td><img src="screenshots/show_1.png" width="400"></td>
@@ -65,6 +67,7 @@ bin/dev
   </tr>
 </table>
 
+プロフィール画面
 <table>
   <tr>
     <td><img src="screenshots/prof_1.png" width="400"></td>
@@ -72,6 +75,7 @@ bin/dev
   </tr>
 </table>
 
+トピック・コメントの追加
 <table>
   <tr>
     <td><img src="screenshots/new_topic.png" width="400"></td>

@@ -14,14 +14,6 @@
 #   password: "aa1234"
 # )
 
-# # avatarなしのユーザー
-# 2.times do |i|
-#   user = User.create!(
-#     email: Faker::Internet.email,
-#     password: "aa1234"
-#   )
-# end
-
 # 10.times do |i|
 #   user = User.create!(
 #     email: Faker::Internet.email,
@@ -37,23 +29,33 @@
 #   )
 # end
 
-users = User.order(:id).to_a
-user_cycle = users.cycle   # ←順番に取り出せる
+# # avatarなしのユーザー
+# 2.times do |i|
+#   user = User.create!(
+#     email: Faker::Internet.email,
+#     password: "aa1234"
+#   )
+# end
 
-5.times do
+# users = User.order(:id).to_a
+# user_cycle = users.cycle   # ←順番に取り出せる
+master_user = User.first
+
+2.times do
   topic = Topic.create!(
     title: Faker::Lorem.sentence(word_count: 5),
     body:  Faker::Lorem.sentence(word_count: 100),
-    user: users.sample
+    # user: users.sample
     # user:  user_cycle.next          # ←トピック作成者は順番に
+    user: master_user
   )
 
-  # コメントも順番に（件数はランダム）
-  rand(10..15).times do
-    topic.comments.create!(
-      body: Faker::Lorem.sentence(word_count: 50),
-      user: users.sample
-      # user: user_cycle.next          # ←コメント投稿者も順番に
-    )
-  end
+  # # コメントも順番に（件数はランダム）
+  # rand(10..15).times do
+  #   topic.comments.create!(
+  #     body: Faker::Lorem.sentence(word_count: 50),
+  #     user: users.sample
+  #     # user: user_cycle.next          # ←コメント投稿者も順番に
+  #   )
+  # end
 end

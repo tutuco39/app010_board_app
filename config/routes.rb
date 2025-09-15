@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root "topics#index"
 
+  resources :topics
+
   resources :topics do
     resources :comments, only: [:create, :destroy]
     resource  :like,     only: [:create, :destroy]          # Topic用
